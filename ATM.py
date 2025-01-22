@@ -1,3 +1,5 @@
+from plyer import notification
+
 pass_book = {
     "name" : "Chain kumar choure",
     "account_number" : 123456789,
@@ -41,6 +43,15 @@ while attempts > 0:
                     pass_book["balance"] -= amount
                     print("\nWithdrawal successful.")
                     print(f"Your available balance is: {pass_book['balance']}")
+
+                    # for notification
+                    notification.notify(
+                        title = "Bank Update",
+                        message = f"Rs.{amount} is Withdraw to A/C xxx789. Avl Bal: Rs. {pass_book['balance']}",
+                        app_icon = "avalanche_crypto_coin_icon_256894.ico",
+                        timeout = 10,
+                    )  # type: ignore
+
                 else:
                     print("Insufficient funds!")
 
@@ -51,6 +62,14 @@ while attempts > 0:
                 print("\nDeposit successful.")
                 print(f"Your available balance is: {pass_book['balance']}")
 
+                # for notification
+                notification.notify(
+                    title = "Bank Update",
+                    message = f"Rs.{amount} is Deposit to A/C xxx789. Avl Bal: Rs. {pass_book['balance']}",
+                    app_icon = "avalanche_crypto_coin_icon_256894.ico",
+                    timeout = 10,
+                    )  # type: ignore
+
             # Change PIN
             elif choice == 4:
                 old_pin = int(input("Enter your old PIN: "))
@@ -58,7 +77,14 @@ while attempts > 0:
                 if pass_book["pin"] == old_pin:
                     new_pin = int(input("Enter your new PIN: "))
                     pass_book.update({"pin": new_pin})
-                    print("\nPIN updated successfully")
+                    
+                    # for notification
+                    notification.notify(
+                        title = "Bank Update",
+                        message = f"Your A/C xxx789 PIN successfully updated. PIN is {new_pin}. Please don't shear this PIN.",
+                        app_icon = "avalanche_crypto_coin_icon_256894.ico",
+                        timeout = 10,
+                    ) # type: ignore
                 else:
                     print("Incorrect old PIN")
 
@@ -75,11 +101,20 @@ while attempts > 0:
 
             # Invalid Choice
             else:
-                print("\nInvalid choice. Please try again.")
+                print("\nInvalid choice. Please choose a number between 1 and 6.")
         break
     else:
         attempts -= 1
         if attempts > 0:
             print(f"Incorrect PIN. You have {attempts} attempts left.")
         else:
-            print("Incorrect PIN entered too many times. Your account is locked.")
+            print("Your account has been locked due to multiple incorrect PIN attempts.")
+            print("To unlock, contact our helpline at 1800-123-4567 or visit the nearest branch.")
+
+            # for notification
+            notification.notify(
+                        title = "Security Update",
+                        message = "Your A/C xxx789 has been locked due to multiple incorrect PIN attempts. Try again after 24 hours or contact customer support.",
+                        app_icon = "avalanche_crypto_coin_icon_256894.ico",
+                        timeout = 10,
+                    ) # type: ignore
